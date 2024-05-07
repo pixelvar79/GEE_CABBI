@@ -62,7 +62,7 @@ This project aims to automatize the identication of optimal sample locations for
 </p>
 
 <div align="center"">
-    <img src="freddies_sd.png" style="width: 400px; height: 500px;">
+    <img src="freddies_sd.png" style="width: 400px; height: 300px;">
 </div>
 
 <p>
