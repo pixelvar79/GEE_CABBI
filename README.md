@@ -51,13 +51,15 @@ This project aims to automatize the identication of optimal sample locations for
 ```
   python clustering.py
 ```
-
+Pipeline of the implemented solution using GEE API calls and Python scripting
 <div align="center"">
     <img src="Screenshot 2024-05-07 160546.png" style="width: 400px; height: 500px;">
 </div>
 
 
 <p>
+
+Farm field example case of inter-year standard desviation calculation using 4 years of intra-year accumulated NDRE.
 
 </p>
 
@@ -66,6 +68,8 @@ This project aims to automatize the identication of optimal sample locations for
 </div>
 
 <p>
+
+Example soil core extraction at defined locations per cluster zones using the proposed pipeline.
 
 </p>
 
