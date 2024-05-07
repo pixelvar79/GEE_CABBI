@@ -53,7 +53,7 @@ This project aims to automatize the identication of optimal sample locations for
 ```
 Pipeline of the implemented solution using GEE API calls and Python scripting
 <div align="center"">
-    <img src="Screenshot 2024-05-07 160546.png" style="width: 400px; height: 500px;">
+    <img src="Screenshot 2024-05-07 160546.png" style="width: 400px; height: 400px;">
 </div>
 
 
