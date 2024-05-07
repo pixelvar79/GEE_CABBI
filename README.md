@@ -49,7 +49,7 @@ This project aims to automatize the identication of optimal sample locations for
   ```
 5) Temporal profile using (Intra-year clustering layer)
 ```
-  python clustering
+  python clustering.py
 ```
 
 
