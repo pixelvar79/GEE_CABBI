@@ -3,7 +3,7 @@ This is the coding implementation for the collaborative project in the transitio
 
 This project aims to automatize the identication of optimal sample locations for monitoring below-above resource allocation in plants in farm fields, with the end goal of improving agroecosystem models parametrization and long-term indicators of sustainability in these systems
 
-1) [sing up for GEE at: ](https://signup.earthengine.google.com/.)
+1) [Sign up for GEE at: ](https://signup.earthengine.google.com/.)
 ```
   conda create --name lodging python=3.9  
 
@@ -52,9 +52,7 @@ This project aims to automatize the identication of optimal sample locations for
   python clustering.py
 ```
 
-
-<p align="center">
 <div style="display: flex; justify-content: center;">
     <img src="Screenshot 2024-05-07 160546.png" style="width: 400px; height: 500px;">
 </div>
-</p>
+
