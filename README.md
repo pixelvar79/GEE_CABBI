@@ -51,3 +51,10 @@ This project aims to automatize the identication of optimal sample locations for
 ```
   python clustering
 ```
+
+
+<p align="center">
+<div style="display: flex; justify-content: center;">
+    <img src="Screenshot 2024-05-07 160546.png" style="width: 400px; height: 500px;">
+</div>
+</p>
