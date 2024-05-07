@@ -52,7 +52,7 @@ This project aims to automatize the identication of optimal sample locations for
   python clustering.py
 ```
 
-<div style="display: flex; justify-content: center;">
+<div align="center"">
     <img src="Screenshot 2024-05-07 160546.png" style="width: 400px; height: 500px;">
 </div>
 
