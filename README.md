@@ -1,4 +1,4 @@
-# SpatioTemporal-Lodging-
+# GEE-CABBI
 This is the coding implementation for the collaborative project in the transition from use of traditional approaches into modern data science approaches involves agroecosystem modelers in CABBI. 
 
 This project aims to automatize the identication of optimal sample locations for monitoring below-above resource allocation in plants in farm fields, with the end goal of improving agroecosystem models parametrization and long-term indicators of sustainability in these systems
