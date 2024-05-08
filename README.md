@@ -19,11 +19,9 @@ conda --version
   On Windows, you can check "Add Anaconda to my PATH environment variable" during installation.
   On Linux/Mac, you may need to add the following line to your shell profile file (e.g., .bashrc or .zshrc):
 ```
-  conda create --name lodging python=3.9  
+  conda create --name ee python=3.9  
 
-  cd lodging
-
-  conda activate lodging
+  conda activate ee
   
   pip install earthengine-api
 
