@@ -4,6 +4,20 @@ This is the coding implementation for the collaborative project in the transitio
 This project aims to automatize the identication of optimal sample locations for monitoring below-above resource allocation in plants in farm fields, with the end goal of improving agroecosystem models parametrization and long-term indicators of sustainability in these systems
 
 1) [Sign up for GEE at: ](https://signup.earthengine.google.com/.)
+
+check if anaconda is installed locally
+```
+conda --version
+
+```
+  https://docs.conda.io/projects/miniconda/en/latest/
+  
+  miniconda will be enough for creating venv and dependencies
+  
+  During the installation, you might be prompted to add Anaconda to the system PATH. If not, and if you encounter issues, you can add it manually:
+  
+  On Windows, you can check "Add Anaconda to my PATH environment variable" during installation.
+  On Linux/Mac, you may need to add the following line to your shell profile file (e.g., .bashrc or .zshrc):
 ```
   conda create --name lodging python=3.9  
 
