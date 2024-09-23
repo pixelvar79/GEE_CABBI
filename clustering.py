@@ -172,6 +172,7 @@ def cluster_and_plot(accumulated_ndre, n_clusters=None, random_state=None):
 
     # Apply k-means classification only to non-nodata pixels
     kmeans = KMeans(n_clusters=n_clusters, random_state=random_state)
+    
     try:
         kmeans.fit(reshaped_ndre[~nodata_mask].reshape(-1, 1))
     except ValueError as e:

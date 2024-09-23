@@ -1,5 +1,8 @@
 from bbox_generator import process_shapefile, process_shapefiles_folder
-from ee_gdrive_wrapper import export_dem_and_ssurgodata_to_drive, export_s2, export_s1
+#from ee_gdrive_wrapper import export_3dem_to_drive, export_s2,export_chirp_to_drive,export_polaris_to_drive #, export_s1
+#from ee_gdrive_wrapper_S2_L1C_Py6S import export_3dem_to_drive, export_s2,export_chirp_to_drive,export_polaris_to_drive #, export_s1
+from ee_gdrive_wrapper_S2_L1C_simplified_cal import export_s2#, export_s1
+from ee_gdrive_wrapper import export_gridmet_to_drive
 import gdown
 import os
 import ee
@@ -41,7 +44,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     input_folder_path = sys.argv[1]
-    gdrive_output_path = sys.argv[2]
+    #gdrive_output_path = sys.argv[2]
     
     # Check if the provided path is a file or a folder
     if os.path.isfile(input_folder_path):
@@ -112,19 +115,23 @@ if __name__ == "__main__":
                 for bbox in coordinates:
                     bounding_box = ee.Geometry.Rectangle([bbox[0], bbox[1], bbox[2], bbox[3]])
                     
-                    #export_s2(bounding_box, start_date, end_date, shp_name)
-                    export_s1(bounding_box, start_date, end_date, shp_name)
-                    #export_dem_and_ssurgodata_to_drive(bounding_box, shp_name)
+                    export_s2(bounding_box, start_date, end_date, shp_name)
+                    #export_s1(bounding_box, start_date, end_date, shp_name)
+                    #export_3dem_to_drive(bounding_box, shp_name)
+                    #export_chirp_to_drive(bounding_box, start_date, end_date, shp_name)
+                    #export_polaris_to_drive(bounding_box, start_date, end_date, shp_name)
+                    
+                    #export_gridmet_to_drive(bounding_box, start_date, end_date, shp_name)
 
-            # Prompt the user for input on whether to download the Google Drive folder
-        download_choice = input("Do you want to download the Google Drive folder? (y/n): ")
+        #     # Prompt the user for input on whether to download the Google Drive folder
+        # download_choice = input("Do you want to download the Google Drive folder? (y/n): ")
 
-        if download_choice.lower() == 'y':
-            gdrive_url = 'https://drive.google.com/drive/folders/1DUyvk3u09GLNPOu6HY1x3DpwvWv-lbK2?usp=sharing'
-            # Prompt the user for input on whether to delete files after download
-            #delete_after_download_choice = input("Do you want to delete files in the Google Drive folder after download? (y/n): ")
+        # if download_choice.lower() == 'y':
+        #     gdrive_url = 'https://drive.google.com/drive/folders/1DUyvk3u09GLNPOu6HY1x3DpwvWv-lbK2?usp=sharing'
+        #     # Prompt the user for input on whether to delete files after download
+        #     #delete_after_download_choice = input("Do you want to delete files in the Google Drive folder after download? (y/n): ")
 
-            download_google_drive_folder(gdrive_url, gdrive_output_path)
-            print("Google Drive folder download completed.")
-        else:
-            print("Skipped Google Drive folder download.")
+        #     download_google_drive_folder(gdrive_url, gdrive_output_path)
+        #     print("Google Drive folder download completed.")
+        # else:
+        #     print("Skipped Google Drive folder download.")

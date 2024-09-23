@@ -1,9 +1,15 @@
+from ee_init import EarthEngine
+
 from bbox_generator import process_shapefile, process_shapefiles_folder
 from checker_wrapper import process_s2, process_s1
 import os
 import ee
 import sys
 import pandas as pd
+
+# Get the instance (initializes only if not already done)
+ee_instance = EarthEngine()
+#ython ee_image_checker.py ../../data/input_shps
 
 # initialize empty list to store the requested scenes metadata
 output_list = []
@@ -21,13 +27,14 @@ if __name__ == "__main__":
     # Authenticate with Earth Engine using your Google account
     #ee.Authenticate()
     
-    if len(sys.argv) != 3:
-        print("Usage: python script.py input_folder_path gdrive_output_path")
+    if len(sys.argv) != 2:
+        #print("Usage: python script.py input_folder_path gdrive_output_path")
+        print("Usage: python script.py input_folder_path")
         sys.exit(1)
 
     input_folder_path = sys.argv[1]
-    gdrive_output_path = sys.argv[2]
-    
+    #gdrive_output_path = sys.argv[2]
+    print(f'checking whether this is a file or a folder: {input_folder_path}')
     # Check if the provided path is a file or a folder
     if os.path.isfile(input_folder_path):
         result = [process_shapefile(input_folder_path)]
@@ -114,7 +121,7 @@ if __name__ == "__main__":
         # Save the DataFrame as a CSV file
        #output_df.to_csv('../check_sentinel_available_filtering.csv', index=False)
         
-        csv_path = '../check_sentinel_available.csv'
+        csv_path = '../check_sentinel_available_HARM_1C.csv'
 
         # Check if the CSV file already exists
         if os.path.exists(csv_path):

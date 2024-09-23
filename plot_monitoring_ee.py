@@ -5,10 +5,10 @@ import calendar
 import os
 
 # Create a folder to save figures
-output_folder = '../output_figures'
+output_folder = '../output_figures1'
 os.makedirs(output_folder, exist_ok=True)
 # Read the CSV file
-df = pd.read_csv('../check_sentinel_available.csv')
+df = pd.read_csv('../check_sentinel_available_HARM_1C.csv')
 
 # Convert 'acquisition_date' to datetime
 df['acquisition_date'] = pd.to_datetime(df['acquisition_date'])

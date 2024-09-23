@@ -107,9 +107,9 @@ if __name__ == "__main__":
     
     #input_download = '../data/input_images/input_3dep1m/3DEP1m_ee-20231230T004620Z-001/3DEP1m_ee'
     
-    input_download = '../data/input_images/3DEP1m_ee_utm'
+    input_download = '../../data/input_shps'
     #output_folder_reprojected = '../temp_files'
-    output_folder_utm = '../data/input_images/3DEP1m_ee_utm1'
+    output_folder_utm = '../../data/input_shps_utm1'
     
     
 
@@ -117,19 +117,19 @@ if __name__ == "__main__":
     #output_folder_reprojected = create_or_recreate_folder(output_folder_reprojected)
     output_folder_utm = create_or_recreate_folder(output_folder_utm)
 
-    # Iterate through each file in the input folder and reproject
-    for filename in os.listdir(input_download):
-        if filename.endswith(".tif"):
-            input_path = os.path.join(input_download, filename)
-            reproject_tiff(input_path, output_folder_utm)
+    # # Iterate through each file in the input folder and reproject
+    # for filename in os.listdir(input_download):
+    #     if filename.endswith(".tif"):
+    #         input_path = os.path.join(input_download, filename)
+    #         reproject_tiff(input_path, output_folder_utm)
 
 
 
-    # inp_shps = '../data/input_shps'
-    # output_folder_shps = '../data/input_shps_utm'
+    inp_shps = '../../data/input_shps'
+    output_folder_shps = '../../data/input_shps_utm1'
 
-    # # Reproject all shapefiles in inp_shps and its subfolders
-    # reproject_all_shps(inp_shps, output_folder_shps)
+    # Reproject all shapefiles in inp_shps and its subfolders
+    reproject_all_shps(inp_shps, output_folder_shps)
 
     # # Move the reprojected files to the new destination
     # #shutil.move(output_folder_reprojected, output_folder_downloaded)

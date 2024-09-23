@@ -59,22 +59,6 @@ def find_common_pattern(folder_path):
 
     return common_patterns
 
-# # Function to attach tifs to corresponding groups
-# def attach_tifs_to_groups(groups, common_patterns, shp_folder):
-#     attached_groups = {pattern: [] for pattern in common_patterns}
-
-#     # Walk through the topo folder
-#     for _, _, filenames in os.walk(shp_folder):
-#         for filename in filenames:
-#             # Extract common pattern (assuming files are separated by underscores)
-#             common_pattern = filename.split('_')[1]
-
-#             # Attach tif file to the corresponding group
-#             for group_pattern, group_folders in groups.items():
-#                 if group_pattern in common_pattern:
-#                     attached_groups[group_pattern].extend(group_folders)
-
-#     return attached_groups
 
 def attach_tifs_to_groups(groups, common_patterns, shp_folder):
     attached_groups = {pattern: [] for pattern in common_patterns}

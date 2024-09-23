@@ -1,12 +1,15 @@
+from ee_init import EarthEngine
+
 import ee
 import os
 import datetime
-from datetime import datetime
+from datetime import datetime, timezone
 import csv
 import sys
 import pandas as pd
 
-ee.Initialize()
+# Get the instance (initializes only if not already done)
+ee_instance = EarthEngine()
 
 # Create an empty list to store the output data for each iteration
 output_data_list = []
@@ -24,19 +27,18 @@ def is_data_in_csv(field_name, acquisition_date, sensor_type):
 def process_s2(bounding_box, start_date, end_date, shp_name):
     global output_data_list  # Use global to access the list outside
     # Get the initial number of scenes in the collection
-    initial_count = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED').filterBounds(bounding_box).size().getInfo()
+    print('initialization of the collection......')
+    #initial_count = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED').filterBounds(bounding_box).size().getInfo()
     #initial_count = ee.ImageCollection('COPERNICUS/S2').filterBounds(bounding_box).size().getInfo()
-    #initial_count = ee.ImageCollection('COPERNICUS/S2_SR').filterBounds(bounding_box).size().getInfo()
-    #initial_count = ee.ImageCollection('COPERNICUS/S2_CLOUD_PROBABILITY').filterBounds(bounding_box).size().getInfo()
     
     # Create an empty list to store all new data
     all_new_data = []
 
     collection = (
         #ee.ImageCollection('COPERNICUS/S2')
-        #ee.ImageCollection('COPERNICUS/S2_CLOUD_PROBABILITY')
-        ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
+        #ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
         #ee.ImageCollection('COPERNICUS/S2_SR')
+        ee.ImageCollection('COPERNICUS/S2_HARMONIZED')
         .filterBounds(bounding_box)
         .filterDate(ee.Date(start_date), ee.Date(end_date))
         .filterMetadata('CLOUDY_PIXEL_PERCENTAGE', 'less_than', 10)
@@ -47,12 +49,14 @@ def process_s2(bounding_box, start_date, end_date, shp_name):
 
     # Check if there are scenes that meet the specified criteria
     if filtered_count > 0:
-        print(f'Number of scenes before filtering: {initial_count}')
+        #print(f'Number of scenes before filtering: {initial_count}')
         print(f'Number of scenes after filtering: {filtered_count}')
         
         # Print the dates of each capture that meets the criteria
         captured_dates = collection.aggregate_array('system:time_start').getInfo()
-        formatted_dates = [datetime.utcfromtimestamp(date / 1000).strftime('%Y-%m-%d') for date in captured_dates]
+        #formatted_dates = [datetime.utcfromtimestamp(date / 1000).strftime('%Y-%m-%d') for date in captured_dates]
+        formatted_dates = [datetime.fromtimestamp(date / 1000).strftime('%Y-%m-%d') for date in captured_dates]
+
         print(f'Dates of captures that meet the specified criteria for Sentinel 2: {formatted_dates}')
 
         # Set to store unique acquisition dates
@@ -72,7 +76,13 @@ def process_s2(bounding_box, start_date, end_date, shp_name):
             image = ee.Image(images.get(i))
 
             # Get acquisition date
-            acquisition_date = datetime.utcfromtimestamp(image.date().getInfo()['value'] / 1000).strftime('%Y-%m-%d')
+            timestamp_ms = image.date().getInfo()['value']
+            timestamp_s = timestamp_ms / 1000
+            dt = datetime.fromtimestamp(timestamp_s, tz=timezone.utc)
+                
+            acquisition_date = dt.strftime('%Y-%m-%d')
+                
+            #acquisition_date = datetime.utcfromtimestamp(image.date().getInfo()['value'] / 1000).strftime('%Y-%m-%d')
             
             # Check for duplicates
             if acquisition_date in unique_dates:
@@ -96,14 +106,26 @@ def process_s2(bounding_box, start_date, end_date, shp_name):
                 # Append image to the list for individual downloading
                 individual_images.append(image)
                 
-        # Perform individual downloading for non-duplicate images
-        
+        # Perform individual summary for non-duplicate images
         for ind_image in individual_images:
+            
+            try:
+                timestamp_ms = ind_image.date().getInfo()['value']
+                timestamp_s = timestamp_ms / 1000
+                dt = datetime.fromtimestamp(timestamp_s, tz=timezone.utc)
+                
+                acquisition_date = dt.strftime('%Y-%m-%d')
+                acquisition_year = dt.strftime('%Y')
+                acquisition_month = dt.strftime('%m')
+                acquisition_day = dt.strftime('%d')
+            except (KeyError, TypeError, AttributeError) as e:
+                acquisition_date = acquisition_year = acquisition_month = acquisition_day = None
+                print(f"Error extracting acquisition date: {e}")
 
-            acquisition_date = datetime.utcfromtimestamp(ind_image.date().getInfo()['value'] / 1000).strftime('%Y-%m-%d')
-            acquisition_year = datetime.utcfromtimestamp(ind_image.date().getInfo()['value'] / 1000).strftime('%Y')
-            acquisition_month = datetime.utcfromtimestamp(ind_image.date().getInfo()['value'] / 1000).strftime('%m')
-            acquisition_day = datetime.utcfromtimestamp(ind_image.date().getInfo()['value'] / 1000).strftime('%d')
+            # acquisition_date = datetime.utcfromtimestamp(ind_image.date().getInfo()['value'] / 1000).strftime('%Y-%m-%d')
+            # acquisition_year = datetime.utcfromtimestamp(ind_image.date().getInfo()['value'] / 1000).strftime('%Y')
+            # acquisition_month = datetime.utcfromtimestamp(ind_image.date().getInfo()['value'] / 1000).strftime('%m')
+            # acquisition_day = datetime.utcfromtimestamp(ind_image.date().getInfo()['value'] / 1000).strftime('%d')
             cloud_coverage = ind_image.get('CLOUDY_PIXEL_PERCENTAGE').getInfo() if ind_image.get('CLOUDY_PIXEL_PERCENTAGE') else None
             sensor_type = ind_image.get('SPACECRAFT_NAME').getInfo() if ind_image.get('SPACECRAFT_NAME') else None
             #sensor_quality = ind_image.get('SENSOR_QUALITY_FLAG').getInfo() if ind_image.get('SENSOR_QUALITY_FLAG') else None
